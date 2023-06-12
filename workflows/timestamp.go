@@ -21,10 +21,10 @@ func ConvertTimestamp(query string) []Item {
 		}
 
 		localDate := time.UnixMilli(timestamp).Format("2006-01-02 15:04:05.000")
-		output = append(output, makeItem(localDate, fmt.Sprintf("Local time for %s", query)))
+		output = append(output, makeItem(localDate, "Local"))
 
 		utcDate := time.UnixMilli(timestamp).UTC().Format("2006-01-02 15:04:05.000")
-		output = append(output, makeItem(utcDate, fmt.Sprintf("UTC time for %s", query)))
+		output = append(output, makeItem(utcDate, "UTC"))
 
 	} else {
 		match := regexp.MustCompile(`(\d{4}-\d{2}-\d{2})?[ T]?((\d{2}:\d{2})(:\d{2})?(.(\d{1,6}))?)?`).FindStringSubmatch(query)
@@ -47,7 +47,7 @@ func ConvertTimestamp(query string) []Item {
 
 			if dt, err := time.Parse("2006-01-02 15:04:05.000000", fmt.Sprintf("%s %s%s.%d%s", date, hourMinutes, seconds, subsecondsInt, strings.Repeat("0", 6-len(strconv.FormatInt(subsecondsInt, 10))))); err == nil {
 				millis := fmt.Sprintf("%d", dt.UnixMilli())
-				output = append(output, makeItem(millis, fmt.Sprintf("Unixtime millis for %s", query)))
+				output = append(output, makeItem(millis, "Unixtime millis"))
 			} else {
 				output = append(output, makeItem(fmt.Sprintf("Error: %s", err), fmt.Sprintf("Error for %s", query)))
 			}
