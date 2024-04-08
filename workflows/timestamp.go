@@ -45,7 +45,9 @@ func ConvertTimestamp(query string) []Item {
 				subsecondsInt = 0
 			}
 
-			if dt, err := time.Parse("2006-01-02 15:04:05.000000", fmt.Sprintf("%s %s%s.%d%s", date, hourMinutes, seconds, subsecondsInt, strings.Repeat("0", 6-len(strconv.FormatInt(subsecondsInt, 10))))); err == nil {
+			formatted := fmt.Sprintf("%s %s%s.%d%s", date, hourMinutes, seconds, subsecondsInt, strings.Repeat("0", 6-len(strconv.FormatInt(subsecondsInt, 10))))
+
+			if dt, err := time.ParseInLocation("2006-01-02 15:04:05.000000", formatted, time.Now().Location()); err == nil {
 				millis := fmt.Sprintf("%d", dt.UnixMilli())
 				output = append(output, makeItem(millis, "Unixtime millis"))
 			} else {
