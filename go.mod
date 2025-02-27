@@ -1,6 +1,6 @@
 module github.com/kulikov/alfred-workflow
 
-go 1.20
+go 1.23.1
 
 require gopkg.in/alecthomas/kingpin.v2 v2.2.6
 
