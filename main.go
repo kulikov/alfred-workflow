@@ -15,12 +15,16 @@ var (
 
 	timestampConverter = app.Command("timestamp-converter", "Timestamp converter")
 	timestampQuery     = timestampConverter.Arg("query", "Date or timestamp").Required().String()
+
+	pwgen       = app.Command("pwgen", "Password generator")
+	pwgenLength = pwgen.Arg("length", "Length").Default("24").Int()
 )
 
 func main() {
 	output := runCommand()
 
 	result, _ := json.MarshalIndent(map[string]interface{}{"items": output}, "", "  ")
+
 	fmt.Println(string(result))
 }
 
@@ -28,6 +32,9 @@ func runCommand() []workflows.Item {
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
 	case timestampConverter.FullCommand():
 		return workflows.ConvertTimestamp(*timestampQuery)
+
+	case pwgen.FullCommand():
+		return workflows.Pwgen(*pwgenLength)
 	}
 
 	return make([]workflows.Item, 0)
