@@ -18,6 +18,8 @@ var (
 
 	pwgen       = app.Command("pwgen", "Password generator")
 	pwgenLength = pwgen.Arg("length", "Length").Default("24").Int()
+
+	evmkeys = app.Command("evmkeys", "Generate Ethereum keys")
 )
 
 func main() {
@@ -29,12 +31,16 @@ func main() {
 }
 
 func runCommand() []workflows.Item {
+
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
 	case timestampConverter.FullCommand():
 		return workflows.ConvertTimestamp(*timestampQuery)
 
 	case pwgen.FullCommand():
 		return workflows.Pwgen(*pwgenLength)
+
+	case evmkeys.FullCommand():
+		return workflows.Evmkeys()
 	}
 
 	return make([]workflows.Item, 0)
