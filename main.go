@@ -20,6 +20,12 @@ var (
 	pwgenLength = pwgen.Arg("length", "Length").Default("24").Int()
 
 	evmkeys = app.Command("evmkeys", "Generate Ethereum keys")
+
+	translate        = app.Command("translate", "Translate text between languages")
+	translateLang    = translate.Arg("lang", "Language pair (e.g. ru-en)").Required().String()
+	translateText    = translate.Arg("text", "Text to translate").Required().String()
+	translateKeyFile = translate.Flag("key-file", "Path to ChatGPT API key file").String()
+	translateModel   = translate.Flag("model", "Model to use").Default("gpt-5-mini").String()
 )
 
 func main() {
@@ -41,6 +47,9 @@ func runCommand() []workflows.Item {
 
 	case evmkeys.FullCommand():
 		return workflows.Evmkeys()
+
+	case translate.FullCommand():
+		return workflows.Translate(*translateLang, *translateText, *translateKeyFile, *translateModel)
 	}
 
 	return make([]workflows.Item, 0)
