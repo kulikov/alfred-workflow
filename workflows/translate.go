@@ -21,8 +21,22 @@ func Translate(langPair, text, keyFile, model string) []Item {
 
 	lang1, lang2 := langs[0], langs[1]
 
-	prompt := `Translate the following text. If the text is in ` + lang1 + `, translate to ` + lang2 + `. If the text is in ` + lang2 + `, translate to ` + lang1 + `. Output ONLY the translation, nothing else:
+	prompt := `Translate the text below. If it's in ` + lang1 + `, translate to ` + lang2 + `. If it's in ` + lang2 + `, translate to ` + lang1 + `.
 
+Style rules:
+- Write the way a regular person texts a coworker or friend, not like an essay or article.
+- Use simple, everyday words. Avoid formal, academic, or marketing-style vocabulary.
+- Keep it short. Don't add words that weren't in the original. Don't "improve" or expand the message.
+- Use common contractions (it's, don't, I'm, can't, we'll).
+- Don't start sentences with "Certainly", "Of course", "Indeed", "Furthermore", "Moreover", "Additionally". Don't end with summaries or polite filler.
+- It's fine to leave a slightly imperfect, casual phrasing if that's how a non-native speaker would actually say it. Don't over-polish.
+- Match the original tone: casual stays casual, blunt stays blunt, a question stays a question.
+- Keep punctuation light. No em-dashes (—). Prefer commas, periods, or just a new sentence.
+- Preserve technical terms, code, names, URLs, numbers, and emojis exactly as written.
+
+Output ONLY the translation. No quotes, no notes, no explanations.
+
+Text:
 ` + text
 
 	chatgptPath := "chatgpt"

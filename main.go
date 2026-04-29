@@ -25,7 +25,7 @@ var (
 	translateLang    = translate.Arg("lang", "Language pair (e.g. ru-en)").Required().String()
 	translateText    = translate.Arg("text", "Text to translate").Required().String()
 	translateKeyFile = translate.Flag("key-file", "Path to ChatGPT API key file").String()
-	translateModel   = translate.Flag("model", "Model to use").Default("gpt-5-mini").String()
+	translateModel   = translate.Flag("model", "Model to use").Default("gpt-4.1-nano").String()
 )
 
 func main() {
