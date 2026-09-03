@@ -33,6 +33,12 @@ Style rules:
 - Match the original tone: casual stays casual, blunt stays blunt, a question stays a question.
 - Keep punctuation light. No em-dashes (—). Prefer commas, periods, or just a new sentence.
 - Preserve technical terms, code, names, URLs, numbers, and emojis exactly as written.
+- This is a Slack message to coworkers. Lowercase first letter is fine if the original is lowercase. No period at the end of a one-sentence message.
+- If the original mixes English words or product terms into Russian (e.g. "деплой", "пулл реквест", "воркспейс"), keep them as the plain English term (deploy, PR, workspace), don't rephrase them.
+- Write like a software engineer in a dev team chat. Use the short forms the team actually uses: PR, QA, prod, env, config, repo, deps, msg, tx, btw, imo, afaik, wip, lgtm, pls, thx, np, asap. Don't force them in, but pick them over the long form when a dev would.
+- Prefer "gonna", "wanna", "kinda", "yeah", "nope", "ok" where the original is that casual.
+- Plain ASCII only for punctuation: straight apostrophes and quotes ('), never curly ones.
+- Keep the original line breaks and list structure as is.
 
 Output ONLY the translation. No quotes, no notes, no explanations.
 
@@ -44,7 +50,7 @@ Text:
 		chatgptPath = filepath.Join(usr.HomeDir, ".dotfiles", "bin", "chatgpt")
 	}
 
-	cmd := exec.Command(chatgptPath, "-n", "--model", model, "--completions-path", "/v1/chat/completions", prompt)
+	cmd := exec.Command(chatgptPath, "-q", "--omit-history", "--effort", "low", "--model", model, prompt)
 
 	if keyFile != "" {
 		keyData, err := os.ReadFile(keyFile)
